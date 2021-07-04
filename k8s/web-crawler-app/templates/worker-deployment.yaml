@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{.Values.worker.serviceName}}-deployment"
+spec:
+  replicas: {{ .Values.worker.replicaCount }}
+  selector:
+    matchLabels:
+      component: {{.Values.worker.serviceName}}
+  template:
+    metadata:
+      labels:
+        component: {{.Values.worker.serviceName}}
+    spec:
+        containers:
+          - name: "{{ .Values.app.image.appName }}-{{.Values.worker.serviceName}}"
+            image: "{{ .Values.app.image.repository }}/{{ .Values.app.image.appName }}-{{.Values.worker.serviceName}}:{{ .Values.worker.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+            ports:
+              - name: http
+                containerPort: {{ .Values.worker.service.port }}
+                protocol: TCP
+            env:
+              - name: PORT
+                valueFrom:
+                  configMapKeyRef:
+                    name: env
+                    key: WORKER_PORT
+              - name: WORKER_PORT
+                valueFrom:
+                  configMapKeyRef:
+                    name: env
+                    key: WORKER_PORT
+              - name: WORKER_HOST
+                valueFrom:
+                  configMapKeyRef:
+                    name: env
+                    key: WORKER_HOST
+              - name: PARSER_PORT
+                valueFrom:
+                  configMapKeyRef:
+                    name: env
+                    key: PARSER_PORT
+              - name: PARSER_HOST
+                valueFrom:
+                  configMapKeyRef:
+                    name: env
+                    key: PARSER_HOST
+              - name: REDIS_PORT
+                valueFrom:
+                  configMapKeyRef:
+                    name: env
+                    key: REDIS_PORT
+              - name: REDIS_HOST
+                valueFrom:
+                  configMapKeyRef:
+                    name: env
+                    key: REDIS_HOST
+              - name: AWS_ACCESS_KEY_ID
+                valueFrom:
+                  configMapKeyRef:
+                    name: env
+                    key: AWS_ACCESS_KEY_ID
+              - name: AWS_SECRET_ACCESS_KEY
+                valueFrom:
+                  configMapKeyRef:
+                    name: env
+                    key: AWS_SECRET_ACCESS_KEY
+              - name: MONGODB
+                valueFrom:
+                  configMapKeyRef:
+                    name: env
+                    key: MONGODB

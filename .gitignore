@@ -1,7 +1,7 @@
 /client/config
 /client/node_modules
 /client/package-lock.json
-
+/k8s/web-crawler-app/templates/env.yaml
 
 /server/config
 /server/node_modules

@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worker
+  template:
+    metadata:
+      labels:
+        app: worker
+    spec:
+      containers:
+      - name: web-crawler-worker
+        image: maor30levy/web-crawler-worker:latest
+        ports:
+        - containerPort: 4000
+        env:
+          - name: PORT
+            valueFrom:
+              configMapKeyRef:
+                name: dev-env
+                key: WORKER_PORT
+          - name: WORKER_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: dev-env
+                key: WORKER_PORT
+          - name: WORKER_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: dev-env
+                key: WORKER_HOST
+          - name: PARSER_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: dev-env
+                key: PARSER_PORT
+          - name: PARSER_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: dev-env
+                key: PARSER_HOST
+          - name: REDIS_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: dev-env
+                key: REDIS_PORT
+          - name: REDIS_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: dev-env
+                key: REDIS_HOST
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              configMapKeyRef:
+                name: dev-env
+                key: AWS_ACCESS_KEY_ID
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              configMapKeyRef:
+                name: dev-env
+                key: AWS_SECRET_ACCESS_KEY
+          - name: MONGODB
+            valueFrom:
+              configMapKeyRef:
+                name: dev-env
+                key: MONGODB

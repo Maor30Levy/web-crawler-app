@@ -1,0 +1,82 @@
+app:
+  image:
+    repository: maor30levy
+    appName: "web-crawler"
+    pullPolicy: IfNotPresent
+    imagePullSecrets: []
+    nameOverride: ""
+    fullnameOverride: ""
+
+client:
+  replicaCount: 1
+
+  serviceName: "client"
+
+  image:
+    tag: "latest"
+
+  service:
+    type: ClusterIP
+    port: 3000
+
+server:
+  replicaCount: 1
+
+  serviceName: "server"
+
+  image:
+    tag: "latest"
+
+  service:
+    type: ClusterIP
+    port: 4000
+
+worker:
+  replicaCount: 2
+
+  serviceName: "worker"
+
+  image:
+    tag: "latest"
+
+  service:
+    type: ClusterIP
+    port: 5000
+
+parser:
+  replicaCount: 3
+
+  serviceName: "parser"
+
+  image:
+    tag: "latest"
+
+  service:
+    type: ClusterIP
+    port: 5050
+
+redis:
+  replicaCount: 1
+
+  serviceName: "redis"
+
+  image:
+    appName: "custome-redis"
+    tag: "latest"
+
+  service:
+    type: ClusterIP
+    port: 6379
+
+clientPort: "3000"
+serverPort: "4000"
+workerPort: "5000"
+parserPort: "5050"
+redisPort: "6379"
+serverHost: "server-service.default"
+workerHost: "worker-service.default"
+parserHost: "parser-service.default"
+redisHost: "redis-service.default"
+awsAccessID: "AKIAR4HZLN6NTOE5XMUF"
+awsAccessKey: "7loXTpmf9Won62pQArPB3d1uHGWh4DLrBjvJiD8R"
+mongoDB: "mongodb+srv://myuser:mongoPass@cluster0.7okwl.mongodb.net/web-crawler?retryWrites=true&w=majority"

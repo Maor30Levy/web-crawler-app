@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+      - name: web-crawler-client
+        image: maor30levy/web-crawler-client:latest
+        ports:
+        - containerPort: 3000
+        env:
+          - name: PORT
+            valueFrom:
+              configMapKeyRef:
+                name: dev-env
+                key: CLIENT_PORT
+          - name: SERVER_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: dev-env
+                key: SERVER_PORT
+          - name: SERVER_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: dev-env
+                key: SERVER_HOST

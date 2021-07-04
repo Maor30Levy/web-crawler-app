@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{.Values.redis.serviceName}}-deployment"
+spec:
+  replicas: {{ .Values.redis.replicaCount }}
+  selector:
+    matchLabels:
+      component: {{.Values.redis.serviceName}}
+  template:
+    metadata:
+      labels:
+        component: {{.Values.redis.serviceName}}
+    spec:
+        containers:
+          - name: "{{ .Values.app.image.appName }}-{{.Values.redis.serviceName}}"
+            image: "{{ .Values.app.image.repository }}/{{ .Values.redis.image.appName }}:{{ .Values.redis.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+            ports:
+              - name: http
+                containerPort: {{ .Values.redis.service.port }}
+                protocol: TCP
