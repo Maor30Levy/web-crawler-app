@@ -1,16 +1,16 @@
-./client/config
-./client/node_modules
-./client/package-lock.json
+/client/config
+/client/node_modules
+/client/package-lock.json
 
 
-./server/config
-./server/node_modules
-./server/package-lock.json
+/server/config
+/server/node_modules
+/server/package-lock.json
 
-./worker/config
-./worker/node_modules
-./worker/package-lock.json
+/worker/config
+/worker/node_modules
+/worker/package-lock.json
 
-./parser/config
-./parser/node_modules
-./parser/package-lock.json
+/parser/config
+/parser/node_modules
+/parser/package-lock.json
